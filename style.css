@@ -17,10 +17,15 @@ body {
 
 }
 
+/* Top Nav */
+nav {
+    text-align: center;
+}
+
 /* Header Styles */
 header {
-    background: #333;
-    color: #fff;
+    background: #f4f4f4;
+    color: #000000;
     padding: 1rem 0;
     text-align: center;
 }
@@ -39,10 +44,21 @@ main {
     padding: 2rem;
 }
 
+/* Adjusting pre for the blogs */
+pre {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    border: 20px solid transparent; /* Added border to all elements */
+}
+
 /* Footer Styles */
 footer {
-    background: #333;
-    color: #fff;
+    background: #f4f4f4;
+    color: #000000;
     text-align: center;
     padding: 1rem 0;
     position: fixed;

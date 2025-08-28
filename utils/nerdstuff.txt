@@ -1,0 +1,53 @@
+Common Semantic Elements in HTML5
+
+Structural / Layout
+<header> → Introductory content or navigation at the top of a page or section. 
+<footer> → Footer information such as copyright, links, or contact details. 
+<main> → The main content unique to that page. 
+<section> → A thematic grouping of content, such as chapters or tab sections. 
+<article> → Independent, self-contained content such as a blog post or news article. 
+<aside> → Tangential content such as a sidebar, ads, or related links. <nav> → Navigation links.
+
+Text Content
+<h1> … <h6> → Headings, showing the hierarchy of content. 
+<p> → Paragraph. 
+<blockquote> → Quoted section. 
+<address> → Contact information.
+
+<time> → Date or time with a machine-readable value.
+
+<figure> → Media and caption grouping, such as an image, chart, or diagram. 
+<figcaption> → Caption for a <figure>.
+
+Inline Semantics
+
+<strong> → Important text (usually bold).
+<em> → Emphasized text (usually italic).
+<mark> → Highlighted text.
+<abbr> → Abbreviation (example: <abbr title="Hypertext Markup Language">HTML</abbr>).
+<code> → Inline code snippet.
+<cite> → Title of a work (book, paper, film).
+<q> → Short quotation.
+
+Tabular and List Content
+<table>, <thead>, <tbody>, 
+<tfoot> → Structured tabular data. 
+<th> → Table header cell. 
+<tr> → Table row. 
+<td> → Table cell. 
+<ul>, <ol>, <li> → Lists (unordered or ordered). 
+<dl>, <dt>, <dd> → Description lists.
+
+Forms
+<form> → Form container.
+<label> → Label for a form control
+
+<input>, <textarea>, <select>, <button> → Form elements.
+<fieldset> → Grouping of related inputs. <legend> → Caption for <fieldset>.
+
+Why Semantic Elements Matter
+
+Accessibility → Screen readers can recognize and navigate important sections (for example, <nav> means navigation).
+SEO → Search engines better understand the structure and meaning of a page.
+Readability → Other developers can read and understand the code more easily.
+Maintainability → Easier to style and organize with CSS (for example, target header nav instead of multiple nested divs).
