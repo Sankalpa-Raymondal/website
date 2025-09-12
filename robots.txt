@@ -2,3 +2,4 @@ User-agent: *
 Disallow: /blogs/
 Disallow: /images/
 Disallow: /utils/
+Sitemap: https://sankalpa-raymondal.github.io/website/sitemap.xml
