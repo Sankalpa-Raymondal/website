@@ -707,3 +707,98 @@ footer {
 @media (prefers-reduced-motion: reduce) {
     .biz-card, .biz-card:hover { transition: none; transform: none; }
 }
+
+/* ---------- Markdown entries (blogs, books, movies) ---------- */
+.entry-list {
+    max-width: 720px;
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.entry-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-left: 4px solid #c72121;
+    padding: 1rem 1.25rem;
+}
+
+.entry-item h3 a {
+    color: #333;
+    text-decoration: none;
+}
+
+.entry-item h3 a:hover {
+    color: #c72121;
+}
+
+.entry-meta {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.entry-subtitle {
+    font-style: italic;
+    color: #555;
+}
+
+.entry-excerpt {
+    margin: 0.5rem 0;
+}
+
+.read-more-link {
+    font-weight: bold;
+    color: #c72121;
+    text-decoration: none;
+}
+
+.read-more-link:hover {
+    text-decoration: underline;
+}
+
+.entry-post {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.entry-post h2.entry-subtitle {
+    font-size: 1.2rem;
+    margin: 0.5rem 0 1rem;
+}
+
+.entry-body p,
+.entry-body ul,
+.entry-body ol,
+.entry-body blockquote {
+    margin-bottom: 1rem;
+}
+
+.entry-body ul,
+.entry-body ol {
+    padding-left: 1.5rem;
+}
+
+.entry-body blockquote {
+    border-left: 3px solid #ddd;
+    padding-left: 1rem;
+    color: #555;
+}
+
+.entry-body img {
+    margin: 1rem auto;
+}
+
+/* Returning from a section (index.html#books etc.): centre that card and flash it */
+.flip-card {
+    scroll-margin: 30vh;
+}
+
+.flip-card:target .flip-front {
+    animation: card-flash 1.6s ease-out;
+}
+
+@keyframes card-flash {
+    0%, 40% { border-color: #c72121; box-shadow: 0 0 0 4px rgba(199, 33, 33, 0.25); }
+    100% { border-color: #ddd; box-shadow: none; }
+}

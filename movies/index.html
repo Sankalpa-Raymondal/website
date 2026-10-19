@@ -10,13 +10,16 @@
     <header>
         <h1>Sankalpa Raymondal's Movies</h1>
         <nav>
-            <a href="../index.html">Home Page</a>
+            <a href="../index.html#movies">Home Page</a>
         </nav>
     </header>
 
     <main>
         <h2>Movies</h2>
-        <p>Coming soon.</p>
+        <!-- Entries load automatically from movies/movie_entries/ (see entries.js) -->
+        <div class="entry-list" data-repo-path="movies/movie_entries" data-folder="movie_entries" data-fallback=""></div>
     </main>
+
+    <script src="../entries.js"></script>
 </body>
 </html>
