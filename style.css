@@ -95,3 +95,333 @@ footer {
     transform: translateY(-25px); /* Moves the letter up by 25px */
   }
 }
+/* Dropdowns (details/summary) */
+.dropdown {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 0.75rem 0;
+    overflow: hidden;
+}
+
+.dropdown > summary {
+    cursor: pointer;
+    list-style: none; /* hide default marker */
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    position: relative;
+}
+
+.dropdown > summary::-webkit-details-marker {
+    display: none;
+}
+
+.dropdown > summary::after {
+    content: "▾";
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.2s ease;
+}
+
+.dropdown[open] > summary::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.dropdown > summary:hover {
+    background: #fafafa;
+}
+
+.dropdown > summary h3,
+.dropdown > summary h4 {
+    margin: 0;
+}
+
+.dropdown > summary h4 {
+    font-weight: normal;
+    color: #666;
+}
+
+.dropdown-body {
+    padding: 0 1rem 1rem 2.25rem;
+}
+
+/* Smaller nested dropdown, e.g. course lists */
+.dropdown.nested {
+    border-color: #eee;
+    margin-left: -1.25rem;
+}
+
+.dropdown.nested > summary {
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    font-weight: bold;
+}
+
+.dropdown.nested > ul {
+    padding: 0 1rem 0.75rem 2.25rem;
+}
+
+/* ---------- Skill board ---------- */
+.skills-hint {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 0.75rem;
+}
+
+.skill-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.skill-group {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+}
+
+.skill-group h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #c72121;
+    margin-bottom: 0.5rem;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.chip {
+    font: inherit;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.4rem 0.25rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 999px;
+    background: #f7f7f7;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.chip:hover {
+    border-color: #c72121;
+    transform: translateY(-1px);
+}
+
+.chip.active {
+    background: #c72121;
+    border-color: #c72121;
+    color: #fff;
+}
+
+.chip-count {
+    font-size: 0.75rem;
+    min-width: 1.4em;
+    padding: 0 0.35em;
+    border-radius: 999px;
+    background: #e3e3e3;
+    color: #333;
+    text-align: center;
+}
+
+.chip.active .chip-count {
+    background: #fff;
+    color: #c72121;
+}
+
+.chip-empty .chip-count {
+    display: none;
+}
+
+.chip-empty {
+    padding-right: 0.75rem;
+}
+
+.skill-results {
+    min-height: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.result-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+}
+
+.result-links a {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    background: #fde8e8;
+    color: #a01a1a;
+    text-decoration: none;
+}
+
+.result-links a:hover {
+    text-decoration: underline;
+}
+
+.link-btn {
+    font: inherit;
+    background: none;
+    border: none;
+    color: #c72121;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+/* Highlight matching cards, fade the rest */
+.dropdown[data-skills] {
+    transition: opacity 0.2s, border-color 0.2s, box-shadow 0.2s;
+    scroll-margin-top: 1rem;
+}
+
+.skill-filtering .dropdown[data-skills]:not(.skill-match) {
+    opacity: 0.35;
+}
+
+.dropdown.skill-match {
+    border-color: #c72121;
+    box-shadow: 0 0 0 2px rgba(199, 33, 33, 0.15);
+}
+
+/* ---------- Language meters ---------- */
+.lang-list {
+    list-style: none;
+    max-width: 420px;
+    margin-bottom: 1rem;
+}
+
+.lang-list li {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr 6rem;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.3rem 0;
+}
+
+.lang-list small {
+    color: #666;
+}
+
+.meter {
+    height: 8px;
+    border-radius: 999px;
+    background: #e3e3e3;
+    position: relative;
+    overflow: hidden;
+}
+
+.meter::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: calc(var(--level) * 20%);
+    background: #c72121;
+    border-radius: 999px;
+}
+
+/* ---------- Hobby tiles ---------- */
+.hobby-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.75rem;
+}
+
+.hobby {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 1.1rem 0.5rem 0.9rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    text-align: center;
+    cursor: default;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.hobby:hover,
+.hobby:focus-within {
+    border-color: #c72121;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.hobby-icon {
+    font-size: 2.4rem;
+    line-height: 1.2;
+    display: inline-block;
+}
+
+.hobby a {
+    font-size: 0.8rem;
+    color: #c72121;
+    text-decoration: none;
+}
+
+.hobby a:hover {
+    text-decoration: underline;
+}
+
+/* Each hobby gets its own move */
+.hobby-reading:hover .hobby-icon, .hobby-reading:focus-within .hobby-icon { animation: h-flip 0.9s ease-in-out; }
+.hobby-duolingo:hover .hobby-icon, .hobby-duolingo:focus-within .hobby-icon { animation: h-hop 0.8s ease-in-out infinite; }
+.hobby-cricket:hover .hobby-icon, .hobby-cricket:focus-within .hobby-icon { animation: h-swing 0.7s ease-in-out infinite alternate; transform-origin: 80% 90%; }
+.hobby-chess:hover .hobby-icon, .hobby-chess:focus-within .hobby-icon { animation: h-knight 1.4s ease-in-out infinite; }
+.hobby-tt:hover .hobby-icon, .hobby-tt:focus-within .hobby-icon { animation: h-rally 0.6s ease-in-out infinite alternate; }
+.hobby-movies:hover .hobby-icon, .hobby-movies:focus-within .hobby-icon { animation: h-clap 0.5s ease-in-out 2; transform-origin: 10% 30%; }
+.hobby-music:hover .hobby-icon, .hobby-music:focus-within .hobby-icon { animation: h-beat 0.5s ease-in-out infinite; }
+.hobby-harmonica:hover .hobby-icon, .hobby-harmonica:focus-within .hobby-icon { animation: h-sway 1s ease-in-out infinite alternate; }
+
+/* Floating notes for the harmonica */
+.hobby-harmonica::before,
+.hobby-harmonica::after {
+    content: "♪";
+    position: absolute;
+    top: 1.4rem;
+    font-size: 1.1rem;
+    color: #c72121;
+    opacity: 0;
+    pointer-events: none;
+}
+.hobby-harmonica::before { left: 30%; }
+.hobby-harmonica::after { content: "♫"; right: 30%; }
+.hobby-harmonica:hover::before, .hobby-harmonica:focus-within::before { animation: h-note 1.4s ease-out infinite; }
+.hobby-harmonica:hover::after, .hobby-harmonica:focus-within::after { animation: h-note 1.4s ease-out 0.7s infinite; }
+
+@keyframes h-flip { 0% { transform: rotateY(0); } 100% { transform: rotateY(360deg); } }
+@keyframes h-hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-12px) scale(1.05, 0.95); } 60% { transform: translateY(0) scale(1.08, 0.92); } }
+@keyframes h-swing { from { transform: rotate(25deg); } to { transform: rotate(-35deg); } }
+@keyframes h-knight {
+    0%, 100% { transform: translate(0, 0); }
+    30% { transform: translate(0, -16px); }
+    55% { transform: translate(14px, -16px); }
+    80% { transform: translate(14px, -16px); }
+}
+@keyframes h-rally { from { transform: translateX(-18px) rotate(-15deg); } to { transform: translateX(18px) rotate(15deg); } }
+@keyframes h-clap { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-18deg); } }
+@keyframes h-beat { 0%, 100% { transform: scale(1); } 30% { transform: scale(1.18); } }
+@keyframes h-sway { from { transform: rotate(-10deg); } to { transform: rotate(10deg); } }
+@keyframes h-note {
+    0% { opacity: 0; transform: translateY(0); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-28px) rotate(15deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hobby *, .hobby::before, .hobby::after { animation: none !important; }
+}
