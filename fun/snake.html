@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake | Sankalpa Raymondal's Fun</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Back to Fun</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="snake-game">
+            <h2>🐍 Snake</h2>
+            <div class="snake-scores">
+                <span>Score: <b id="score">0</b></span>
+                <span>Best: <b id="best">0</b></span>
+            </div>
+
+            <div class="snake-board">
+                <canvas id="board" width="400" height="400" aria-label="Snake game board"></canvas>
+                <div class="snake-overlay" id="overlay">
+                    <p id="overlay-title">Snake</p>
+                    <p id="overlay-text">Arrow keys / WASD or swipe to move</p>
+                    <button class="btn btn-primary" id="start-btn" type="button">Start</button>
+                </div>
+            </div>
+
+            <div class="snake-pad" aria-label="Direction buttons">
+                <button type="button" data-dir="up" aria-label="Up">▲</button>
+                <button type="button" data-dir="left" aria-label="Left">◀</button>
+                <button type="button" data-dir="down" aria-label="Down">▼</button>
+                <button type="button" data-dir="right" aria-label="Right">▶</button>
+            </div>
+            <p class="snake-help">Space to pause. Don't hit the walls or yourself.</p>
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            const SIZE = 20;                 // tiles per side
+            const canvas = document.getElementById("board");
+            const ctx = canvas.getContext("2d");
+            const TILE = canvas.width / SIZE;
+            const scoreEl = document.getElementById("score");
+            const bestEl = document.getElementById("best");
+            const overlay = document.getElementById("overlay");
+            const overlayTitle = document.getElementById("overlay-title");
+            const overlayText = document.getElementById("overlay-text");
+            const startBtn = document.getElementById("start-btn");
+
+            const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
+            let snake, dir, queue, food, score, speed, timer, state = "idle";
+
+            let best = 0;
+            try { best = Number(localStorage.getItem("snakeBest")) || 0; } catch (e) {}
+            bestEl.textContent = best;
+
+            function reset() {
+                snake = [[9, 10], [8, 10], [7, 10]];
+                dir = "right";
+                queue = [];
+                score = 0;
+                speed = 130;
+                scoreEl.textContent = 0;
+                placeFood();
+            }
+
+            function placeFood() {
+                do {
+                    food = [Math.floor(Math.random() * SIZE), Math.floor(Math.random() * SIZE)];
+                } while (snake.some(([x, y]) => x === food[0] && y === food[1]));
+            }
+
+            function turn(next) {
+                // Queue turns so quick key presses aren't lost, but never allow a 180° reverse
+                const last = queue.length ? queue[queue.length - 1] : dir;
+                const [lx, ly] = DIRS[last], [nx, ny] = DIRS[next];
+                if (lx + nx === 0 && ly + ny === 0) return;
+                if (next !== last && queue.length < 3) queue.push(next);
+            }
+
+            function step() {
+                if (queue.length) dir = queue.shift();
+                const [dx, dy] = DIRS[dir];
+                const head = [snake[0][0] + dx, snake[0][1] + dy];
+                const ate = head[0] === food[0] && head[1] === food[1];
+                const body = ate ? snake : snake.slice(0, -1); // tail moves away unless we grow
+
+                if (head[0] < 0 || head[1] < 0 || head[0] >= SIZE || head[1] >= SIZE ||
+                    body.some(([x, y]) => x === head[0] && y === head[1])) {
+                    return gameOver();
+                }
+
+                snake.unshift(head);
+                if (ate) {
+                    score++;
+                    scoreEl.textContent = score;
+                    if (score % 5 === 0) speed = Math.max(60, speed - 10); // gets faster
+                    placeFood();
+                } else {
+                    snake.pop();
+                }
+                draw();
+                timer = setTimeout(step, speed);
+            }
+
+            function draw() {
+                ctx.fillStyle = "#fff";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "#f4f4f4";
+                for (let x = 0; x < SIZE; x++)
+                    for (let y = (x % 2); y < SIZE; y += 2)
+                        ctx.fillRect(x * TILE, y * TILE, TILE, TILE); // checkerboard
+
+                // Food
+                ctx.fillStyle = "#c72121";
+                ctx.beginPath();
+                ctx.arc(food[0] * TILE + TILE / 2, food[1] * TILE + TILE / 2, TILE * 0.38, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Snake
+                snake.forEach(([x, y], i) => {
+                    ctx.fillStyle = i === 0 ? "#a01a1a" : "#333";
+                    ctx.fillRect(x * TILE + 1, y * TILE + 1, TILE - 2, TILE - 2);
+                });
+            }
+
+            function showOverlay(title, text, button) {
+                overlayTitle.textContent = title;
+                overlayText.textContent = text;
+                startBtn.textContent = button;
+                overlay.hidden = false;
+            }
+
+            function start() {
+                if (state === "running") return; // e.g. Enter on the focused button fires both keydown and click
+                if (state !== "paused") reset();
+                state = "running";
+                overlay.hidden = true;
+                draw();
+                timer = setTimeout(step, speed);
+            }
+
+            function pause() {
+                if (state !== "running") return;
+                clearTimeout(timer);
+                state = "paused";
+                showOverlay("Paused", `Score: ${score}`, "Resume");
+            }
+
+            function gameOver() {
+                state = "over";
+                if (score > best) {
+                    best = score;
+                    bestEl.textContent = best;
+                    try { localStorage.setItem("snakeBest", best); } catch (e) {}
+                    showOverlay("New best!", `You scored ${score}`, "Play again");
+                } else {
+                    showOverlay("Game over", `You scored ${score}`, "Play again");
+                }
+            }
+
+            // ---- Controls ----
+            const KEYS = {
+                ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right",
+                w: "up", s: "down", a: "left", d: "right", W: "up", S: "down", A: "left", D: "right"
+            };
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === " ") {
+                    e.preventDefault();
+                    if (state === "running") pause();
+                    else start();
+                    return;
+                }
+                if (e.key === "Enter" && state !== "running") return start();
+                const next = KEYS[e.key];
+                if (!next) return;
+                e.preventDefault(); // stop arrow keys scrolling the page
+                if (state === "running") turn(next);
+            });
+
+            startBtn.addEventListener("click", start);
+
+            document.querySelectorAll(".snake-pad button").forEach((b) =>
+                b.addEventListener("click", () => {
+                    if (state === "running") turn(b.dataset.dir);
+                }));
+
+            // Swipe on the board
+            let touchStart = null;
+            canvas.addEventListener("touchstart", (e) => {
+                touchStart = [e.touches[0].clientX, e.touches[0].clientY];
+            }, { passive: true });
+            canvas.addEventListener("touchmove", (e) => {
+                if (state === "running") e.preventDefault(); // don't scroll while playing
+            }, { passive: false });
+            canvas.addEventListener("touchend", (e) => {
+                if (!touchStart || state !== "running") return;
+                const dx = e.changedTouches[0].clientX - touchStart[0];
+                const dy = e.changedTouches[0].clientY - touchStart[1];
+                if (Math.max(Math.abs(dx), Math.abs(dy)) < 20) return;
+                turn(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "right" : "left") : (dy > 0 ? "down" : "up"));
+                touchStart = null;
+            });
+
+            // Pause if the player switches tabs
+            document.addEventListener("visibilitychange", () => { if (document.hidden) pause(); });
+
+            reset();
+            draw();
+        })();
+    </script>
+</body>
+</html>
