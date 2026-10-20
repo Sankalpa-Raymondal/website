@@ -429,8 +429,8 @@ footer {
     .hobby *, .hobby::before, .hobby::after { animation: none !important; }
 }
 
-/* ---------- Home page flip cards ---------- */
-.flip-grid {
+/* ---------- Home page section tiles ---------- */
+.tile-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 1rem;
@@ -438,96 +438,34 @@ footer {
     margin: 1rem auto;
 }
 
-.flip-card {
-    height: 160px;
-    perspective: 800px;
-    outline: none;
-}
-
-.flip-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s ease;
-    transform-style: preserve-3d;
-}
-
-.flip-card:hover .flip-inner,
-.flip-card:focus-within .flip-inner {
-    transform: rotateY(180deg);
-}
-
-.flip-front,
-.flip-back {
-    position: absolute;
-    inset: 0;
+.tile {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-height: 120px;
     padding: 1rem;
-    border-radius: 12px;
-    border: 1px solid #ddd;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    text-align: center;
-}
-
-.flip-front {
     background: #fff;
+    border: 1px solid #ddd;
+    color: #333;
+    text-decoration: none;
+    scroll-margin: 30vh; /* returning from a section (index.html#books etc.) centres the tile */
 }
 
-.flip-icon {
-    font-size: 2.6rem;
-    line-height: 1.2;
+.tile:hover,
+.tile:focus-visible,
+.tile:target {
+    border-color: #c72121;
 }
 
-.flip-title {
+.tile-title {
     font-weight: bold;
     font-size: 1.1rem;
 }
 
-.flip-back {
-    background: #c72121;
-    border-color: #c72121;
-    color: #fff;
-    transform: rotateY(180deg);
-    pointer-events: none; /* not clickable until flipped (so a first tap on phones just flips) */
-}
-
-.flip-card:hover .flip-back,
-.flip-card:focus-within .flip-back {
-    pointer-events: auto;
-}
-
-.flip-back p {
-    font-size: 0.9rem;
-}
-
-.flip-back a {
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
-    padding: 0.2rem 0.8rem;
-    border: 1px solid #fff;
-    border-radius: 999px;
-}
-
-.flip-back a::after {
-    /* whole back face is clickable */
-    content: "";
-    position: absolute;
-    inset: 0;
-}
-
-.flip-back a:hover {
-    background: #fff;
-    color: #c72121;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .flip-inner { transition: none; }
+.tile-desc {
+    font-size: 0.85rem;
+    color: #666;
 }
 
 /* ---------- Home page portfolio hero card ---------- */
@@ -570,11 +508,10 @@ footer {
     color: #c72121;
     text-decoration: none;
     font-weight: bold;
-    transition: background 0.15s, color 0.15s, transform 0.15s;
+    transition: background 0.15s, color 0.15s;
 }
 
 .btn:hover {
-    transform: translateY(-1px);
     background: #fde8e8;
 }
 
@@ -592,7 +529,6 @@ footer {
     display: flex;
     justify-content: center;
     margin: 0.5rem auto 2rem;
-    perspective: 1000px;
 }
 
 .biz-card {
@@ -609,12 +545,6 @@ footer {
     border-top: 6px solid #c72121;
     border-radius: 0;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10), 0 2px 6px rgba(0, 0, 0, 0.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.biz-card:hover {
-    transform: rotateX(4deg) rotateY(-4deg) translateY(-3px);
-    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.14), 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .biz-main {
@@ -704,10 +634,6 @@ footer {
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .biz-card, .biz-card:hover { transition: none; transform: none; }
-}
-
 /* ---------- Markdown entries (blogs, books, movies) ---------- */
 .entry-list {
     max-width: 720px;
@@ -787,20 +713,6 @@ footer {
 
 .entry-body img {
     margin: 1rem auto;
-}
-
-/* Returning from a section (index.html#books etc.): centre that card and flash it */
-.flip-card {
-    scroll-margin: 30vh;
-}
-
-.flip-card:target .flip-front {
-    animation: card-flash 1.6s ease-out;
-}
-
-@keyframes card-flash {
-    0%, 40% { border-color: #c72121; box-shadow: 0 0 0 4px rgba(199, 33, 33, 0.25); }
-    100% { border-color: #ddd; box-shadow: none; }
 }
 
 /* ---------- Fun page tiles ---------- */
