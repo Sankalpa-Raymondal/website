@@ -18,11 +18,14 @@ const REPO_CONTENTS = "https://api.github.com/repos/Sankalpa-Raymondal/website/c
 const EXCERPT_LENGTH = 280;
 
 async function listEntryFiles(repoPath, fallback) {
+    // Cache the file list briefly to stay under GitHub's 60 requests/hour limit,
+    // but not so long that newly pushed entries stay hidden
     const cacheKey = `entries:${repoPath}`;
+    const CACHE_MS = 5 * 60 * 1000;
     try {
-        const cached = sessionStorage.getItem(cacheKey);
-        if (cached) return JSON.parse(cached);
-    } catch (e) { /* storage unavailable */ }
+        const cached = JSON.parse(sessionStorage.getItem(cacheKey));
+        if (cached && Date.now() - cached.time < CACHE_MS) return cached.files;
+    } catch (e) { /* storage unavailable or old format */ }
 
     try {
         const res = await fetch(`${REPO_CONTENTS}${repoPath}?ref=main`);
@@ -31,7 +34,7 @@ async function listEntryFiles(repoPath, fallback) {
         const files = (await res.json())
             .filter((f) => f.type === "file" && f.name.endsWith(".md") && !f.name.startsWith("_"))
             .map((f) => f.name);
-        try { sessionStorage.setItem(cacheKey, JSON.stringify(files)); } catch (e) {}
+        try { sessionStorage.setItem(cacheKey, JSON.stringify({ time: Date.now(), files })); } catch (e) {}
         return files;
     } catch (e) {
         // GitHub unreachable (rate limit, offline): use the page's fallback list
