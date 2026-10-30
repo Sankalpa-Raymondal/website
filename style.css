@@ -763,6 +763,11 @@ footer {
     transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
+button.fun-tile {
+    font: inherit;
+    cursor: pointer;
+}
+
 .fun-tile:hover,
 .fun-tile:focus-visible {
     border-color: #c72121;

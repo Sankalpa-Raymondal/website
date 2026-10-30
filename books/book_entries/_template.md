@@ -7,7 +7,7 @@ Longer thoughts, favourite quotes, etc.
 
 > "A favourite quote goes here."
 
-Copy this file, rename it (e.g. 20261020-iliad.md), and push. Files starting with _ are ignored.
+Copy this file, rename it (e.g. 20261020-iliad.md), run `npm run build`, and push. Files starting with _ are ignored.
 
 <!--
   MEDIA CHEAT SHEET (this comment block is invisible on the site, delete it in your copy)

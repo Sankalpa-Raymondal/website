@@ -22,7 +22,60 @@
                 <span class="fun-title">Snake</span>
                 <span class="fun-desc">The classic. How long can you get?</span>
             </a>
+            <button class="fun-tile" id="vine-boom" type="button">
+                <span class="fun-icon">🔊</span>
+                <span class="fun-title">Funny noise</span>
+                <span class="fun-desc">Press it. You know you want to.</span>
+            </button>
         </div>
     </main>
+
+    <script>
+        // Plays vine-boom.mp3 (put it in this fun/ folder). Until that file exists,
+        // a home-made boom is synthesised instead.
+        const boomFile = new Audio("vine-boom.mp3");
+        let haveFile = true;
+        boomFile.addEventListener("error", () => { haveFile = false; });
+        let audioCtx;
+
+        function synthBoom() {
+            audioCtx = audioCtx || new AudioContext();
+            const now = audioCtx.currentTime;
+            const out = audioCtx.createGain();
+            out.gain.setValueAtTime(0.0001, now);
+            out.gain.exponentialRampToValueAtTime(1, now + 0.01);
+            out.gain.exponentialRampToValueAtTime(0.0001, now + 1.6);
+            out.connect(audioCtx.destination);
+
+            // Low thud that sinks in pitch, with a slightly detuned twin for thickness
+            for (const detune of [0, 12]) {
+                const osc = audioCtx.createOscillator();
+                osc.type = detune ? "triangle" : "sine";
+                osc.frequency.setValueAtTime(120, now);
+                osc.frequency.exponentialRampToValueAtTime(42, now + 0.5);
+                osc.detune.value = detune;
+                osc.connect(out);
+                osc.start(now);
+                osc.stop(now + 1.7);
+            }
+
+            // Echo tail
+            const delay = audioCtx.createDelay();
+            const feedback = audioCtx.createGain();
+            delay.delayTime.value = 0.12;
+            feedback.gain.value = 0.35;
+            out.connect(delay).connect(feedback).connect(delay);
+            feedback.connect(audioCtx.destination);
+        }
+
+        document.getElementById("vine-boom").addEventListener("click", () => {
+            if (haveFile) {
+                boomFile.currentTime = 0;
+                boomFile.play().catch(synthBoom);
+            } else {
+                synthBoom();
+            }
+        });
+    </script>
 </body>
 </html>

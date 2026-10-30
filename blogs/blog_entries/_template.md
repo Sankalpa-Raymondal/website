@@ -5,7 +5,7 @@ First paragraph. This becomes the excerpt on the blog page.
 <!--more-->
 Everything after the line above only shows on the full post.
 
-Copy this file, rename it to the date (e.g. 20261020.md), and push. Files starting with _ are ignored.
+Copy this file, rename it to the date (e.g. 20261020.md), run `npm run build`, and push. Files starting with _ are ignored.
 
 <!--
   MEDIA CHEAT SHEET (this comment block is invisible on the site, delete it in your copy)

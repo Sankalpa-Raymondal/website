@@ -1,3 +1,4 @@
 # --- Media / Large Files ---
 # Ignore all common video formats to prevent push errors
 *.mp4
+node_modules/
