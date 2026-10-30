@@ -15,6 +15,7 @@ Another aspect I would like to talk about is the impact of transnational capital
 
 There were some hilarious moments too. There was the following quote: 
 >“Bad luck doesn't have any chinks in it,” he said with deep bitterness. “I was born a son of a bitch and I'm going to die a son of a bitch.”
+
 I remember laughing my head off while reading this in the MRT. I do not know how to explain it. It is just that I probably never expected these lines to be stated in the book, and also because of how true it is. It is so surreal, and that is quite how life is, isn't it? There are so many moments in the book where my eyebrows keep getting higher and higher. And I can't help but laugh in surprise. 
 
 One hundred years of solitude. It is about the growth of a family and the town associated with it. But this family as well as the town dies too, just like most things in life. 7 generations of the family. I better show you the family tree that is shown in the beginning of the book. It is impossible to understand this family tree. Why is everyone named Aureliano or Acardio? And why is the family so convoluted and why does one woman have kids with two different men of the family? This whole universe is very very different from the one I live in. But I can still relate with time.
