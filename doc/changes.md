@@ -15,7 +15,7 @@ Don't edit the generated entry pages (e.g. `blogs/20261020.html`) or anything be
 
 ---
 
-## 30 October 2026: entry lists built into the page (not yet pushed)
+## 30 October 2026: entry lists built into the page (commit `f106cc3`)
 
 **Why:** the Blogs, Books and Movies pages showed "Loading…" while they fetched the list of entries.
 
