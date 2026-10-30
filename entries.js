@@ -17,6 +17,16 @@
 const REPO_CONTENTS = "https://api.github.com/repos/Sankalpa-Raymondal/website/contents/";
 const EXCERPT_LENGTH = 280;
 
+// Local preview (e.g. VS Code Live Server): read the folder's own listing, so
+// entries show up before they're pushed
+async function listLocalEntryFiles(folder) {
+    const res = await fetch(`${folder}/`);
+    if (!res.ok) throw new Error(res.status);
+    const html = await res.text();
+    const names = [...html.matchAll(/href="[^"]*?([^/"]+\.md)"/g)].map((m) => decodeURIComponent(m[1]));
+    return [...new Set(names)].filter((name) => !name.startsWith("_"));
+}
+
 async function listEntryFiles(repoPath, fallback) {
     // Cache the file list briefly to stay under GitHub's 60 requests/hour limit,
     // but not so long that newly pushed entries stay hidden
@@ -87,7 +97,11 @@ async function displayEntryList(container) {
     const fallback = (container.dataset.fallback || "").split(",").filter(Boolean);
     container.innerHTML = "<p>Loading…</p>";
 
-    const files = (await listEntryFiles(repoPath, fallback)).sort().reverse(); // newest first
+    const isLocal = ["localhost", "127.0.0.1"].includes(location.hostname);
+    const files = (isLocal
+        ? await listLocalEntryFiles(folder).catch(() => listEntryFiles(repoPath, fallback))
+        : await listEntryFiles(repoPath, fallback)
+    ).sort().reverse(); // newest first
     const entries = await Promise.all(files.map(async (file) => {
         try {
             return { file, ...(await fetchEntry(folder, file)) };
